@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import {login,current} from '../../redux/action/action'
 const Login = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
 
   const submitBtn = () => {
     
-    dispatch(login({ email, password }))
+    dispatch(login({ email, password },navigate))
     //dispatch(current())
   }
     return (

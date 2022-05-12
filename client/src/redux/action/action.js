@@ -22,19 +22,20 @@ export let addUser = (user) => async(dispatch)=>{
     }
 }
 
-export const login = (user) => async(dispatch)=>{
+export const login = (user,Navigate) => async(dispatch)=>{
     try {
-        const {data} =  await axios.post('http://localhost:5050/api/login',user)
-        dispatch({type:LOGIN, payload:data}) 
-        localStorage.setItem('token',data.token)
+        const res =  await axios.post('http://localhost:5050/api/login',user)
+        console.log(res)
+        dispatch({type:LOGIN, payload:res.data}) 
+        localStorage.setItem('token',res.data.token)
         
-        dispatch(current())
+        dispatch(current(Navigate))
     } catch (error) {
         console.log(error)
     } 
 }
 
-export const current = () => async(dispatch)=>{
+export const current = (Navigation) => async(dispatch)=>{
     const config = {
         headers:{
             Authorization:localStorage.getItem('token')
@@ -44,6 +45,7 @@ export const current = () => async(dispatch)=>{
         const {data} =  await axios.get('http://localhost:5050/api/current',config)
         dispatch({type:CURRENT, payload:data}) 
         localStorage.setItem('user',JSON.stringify(data.user))
+        Navigation('/profile')
         // localStorage.clear()
     } catch (error) {
         console.log(error)

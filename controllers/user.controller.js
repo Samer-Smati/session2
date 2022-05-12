@@ -31,14 +31,13 @@ exports.Login = async (req,res)=>{
         if(!userExists) {
             return res.status(400).send({msg: 'User not exists'});
         }
-        
         const passwordHashed = bcrypt.compareSync(password,userExists.password);
         if(!passwordHashed){
             return res.status(400).send({msg:'Bad credentials'})
         }
         const userId = {id:userExists._id};
         const token = jwt.sign(userId,process.env.passwordToken);
-        return res.status(200).send({msg: 'Logged successfully',user:userExists,token});
+        return res.status(200).send({msg: 'Logged successfully',token});
     } catch (error) {
         return res.status(500).send({msg: error.message});
     }

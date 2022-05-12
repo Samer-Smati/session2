@@ -14,6 +14,9 @@ exports.isAuth = async (req,res,next) =>{
             return res.status(400).send({msg:'Bad Authorization'});
         }
         const user = await userSchema.findById(decode.id);
+        if(!user){
+            return res.status(400).send({msg:'Bad Authorization'});
+        }
         req.user = user
         next()
     } catch (error) {
