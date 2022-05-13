@@ -32,7 +32,7 @@ exports.Login = async (req,res)=>{
             return res.status(400).send({msg: 'User not exists'});
         }
         const passwordHashed = bcrypt.compareSync(password,userExists.password);
-        if(!passwordHashed){
+        if(!passwordHashed){ 
             return res.status(400).send({msg:'Bad credentials'})
         }
         const userId = {id:userExists._id};
@@ -40,5 +40,22 @@ exports.Login = async (req,res)=>{
         return res.status(200).send({msg: 'Logged successfully',token});
     } catch (error) {
         return res.status(500).send({msg: error.message});
+    }
+}
+
+
+exports.updateUser = async (req,res) =>{
+    const {email,password,id} = req.body 
+    try {
+        const hashedPassword = bcrypt.hashSync(password,10)
+        req.body.password = hashedPassword;
+        console.log(req.body)
+        const userUpdated = await userSchema.findByIdAndUpdate(id,{$set:{...req.body}});
+        if(!userUpdated){
+            return res.status(400).send({msg:'user not updated'})
+        }
+        return res.status(200).send({msg:'user updated',user:userUpdated})
+    } catch (error) {
+        return res.status(500).send({msg:error})
     }
 }

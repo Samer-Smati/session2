@@ -38,7 +38,7 @@ const Login = () => {
                                 <li><i class="fa fa-linkedin"></i></li>
                             </ul>
                             <div class="form-data"> <label>Email</label> <input type="text" class="form-control w-100" required onChange={(e)=> setEmail(e.target.value)} /> </div>
-                            <div class="form-data"> <label>Password</label> <input type="text" class="form-control w-100" required onChange={(e)=> setPassword(e.target.value)} /> </div>
+                            <div class="form-data"> <label>Password</label> <input type="password" class="form-control w-100" required onChange={(e)=> setPassword(e.target.value)} /> </div>
                             <div class="d-flex justify-content-between w-100 align-items-center">
                                 <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" /> <label class="form-check-label" for="flexCheckDefault"> Remember me </label>
                                 </div>

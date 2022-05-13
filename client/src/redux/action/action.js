@@ -45,9 +45,20 @@ export const current = (Navigation) => async(dispatch)=>{
         const {data} =  await axios.get('http://localhost:5050/api/current',config)
         dispatch({type:CURRENT, payload:data}) 
         localStorage.setItem('user',JSON.stringify(data.user))
-        Navigation('/profile')
+            Navigation('/profile')
         // localStorage.clear()
     } catch (error) {
         console.log(error)
     }
+}
+
+
+export const updateUser = (user) => async(dispatch)=>{
+    try {
+        const res =  await axios.put('http://localhost:5050/api/updateUser',user)
+        dispatch({type:'updateUser', payload:res.data}) 
+        localStorage.setItem('user',JSON.stringify(res.data.user))
+    } catch (error) {
+        console.log(error)
+    } 
 }
